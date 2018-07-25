@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+   <head>
+      <title>Exercise Tracker | Free Code Camp</title>
+      <link rel="shortcut icon" href="https://cdn.hyperdev.com/us-east-1%3A52a203ff-088b-420f-81be-45bf559d01b1%2Ffavicon.ico" type="image/x-icon"/>
+      <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+      <link href="style.css" rel="stylesheet" type="text/css">
+   </head>
+
+   <body>
+      <div class="container">
+         <h1>Exercise tracker</h1>
+          <form action="/api/exercise/new-user" method="post">
+            <h3>Create a New User</h3>
+            <p><code>POST /api/exercise/new-user</code></p>
+            <input id="uname" type="text" name="username" placeholder="username">
+            <input type="submit" value="Submit">
+          </form>
+          <form action="/api/exercise/add" method="post">
+            <h3>Add exercises</h3>
+            <p><code>POST /api/exercise/add</code></p>
+            <input id="uid" type="text" name="userId" placeholder="userId*" required>
+            <input id="desc" type="text" name="description" placeholder="description*" required>
+            <input id="dur" type="text" name="duration" placeholder="duration* (mins.)" required>
+            <input id="dat" type="text" name="date" placeholder="date (yyyy-mm-dd)">
+            <input type="submit" value="Submit">
+          </form>
+        
+        <h3>
+          User stories:
+        </h3>
+
+        <ul>
+          <li>I can create a user by posting form data username to /api/exercise/new-user and returned will be an object with username and _id.</li>
+          <li>I can get an array of all users by getting api/exercise/users with the same info as when creating a user.</li>
+          <li>I can add an exercise to any user by posting form data userId(_id), description, duration, and optionally date to /api/exercise/add. If no date supplied it will use current date. Returned will the the user object with also with the exercise fields added.</li>
+          <li>I can retrieve a full exercise log of any user by getting /api/exercise/log with a parameter of userId(_id). Return will be the user object with added array log and count (total exercise count).</li>
+          <li>I can retrieve part of the log of any user by also passing along optional parameters of from & to or limit. (Date format yyyy-mm-dd, limit = int)</li>
+        </ul>
+
+        <p>
+          <h3>Example creation usage:</h3>
+
+          <ul>
+            <label>For creating a user</label>
+            <li>Use the <b>'Create a New User'</b> form</li><br/>
+            
+            <label>For getting an array of all users</label>
+            <li><i>https://md-exercise-tracker.glitch.me/api/exercise/users</i></li><br/>
+            
+            <label>For adding an exercise to any user</label>
+            <li>Use the <b>'Add Exercises'</b> form</li><br/>
+            
+            <label>To get the full exercise log of any user</label>
+            <li><i>https://md-exercise-tracker.glitch.me/api/exercise/log?userId=[userId]</i></li><br/>
+            
+            <label>To retrieve part of the exercise log of any user</label>
+            <li><i>https://md-exercise-tracker.glitch.me/api/exercise/log?userId=[userId]&from=[YYYY-MM-DD]&to=[YYYY-MM-DD]</i> or <i>https://md-exercise-tracker.glitch.me/api/exercise/log?userId=[userId]&limit=[integer]</i></li><br/>
+            
+          </ul>
+
+        <h3>Example creation output</h3>
+          <label>For creating a user</label><br/><br/>
+            <code>
+              {
+              "name": "jebediah",
+              "_id": "5b58d3f276ace200507cabe1"
+            }
+            </code> <br/><br/>
+          <label>For getting an array of all users</label><br/><br/>
+            <code>
+            [
+              {
+                "_id": "5b56e3c863ac44429745b48d",
+                "name": "jennifer"
+              },
+              {
+                "_id": "5b58d3f276ace200507cabe1",
+                "name": "jebediah"
+              },
+              {
+                "_id": "5b580e4e43e27309cdb460aa",
+                "name": "jonathan"
+              }
+            ]
+            </code> <br/><br/>
+          <label>For adding an exercise to any user</label><br/><br/>
+            <code>
+            {
+              "name": "jonathan",
+              "_id": "5b580e4e43e27309cdb460aa",
+              "current_exercise": {
+                "description": "pull-ups",
+                "duration": "2",
+                "date": "2016-10-12T00:00:00.000Z"
+              }
+            }
+            </code> <br/><br/>
+          <label>To get the full exercise log of any user</label><br/><br/>
+            <code>
+              {
+                "name": "jonathan",
+                "id": "5b580e4e43e27309cdb460aa",
+                "count": 1,
+                "exercises": [
+                  {
+                    "_id": "5b58d45f76ace200507cabe2",
+                    "description": "pull-ups",
+                    "duration": 2,
+                    "date": "2016-10-12T00:00:00.000Z"
+                  }
+                ]
+              }
+            </code> <br/><br/>
+          <label>To retrieve part of the exercise log of any user</label><br/>
+        <p><i>https://md-exercise-tracker.glitch.me/api/exercise/log?userId=5b56e3c863ac44429745b48d&from=2013-10-10&to=2014-11-15</i></p>
+            <code>
+              {
+                "name": "jennifer",
+                "id": "5b56e3c863ac44429745b48d",
+                "count": 3,
+                "exercises": [
+                  {
+                    "_id": "5b581800efbc642480eb42f0",
+                    "description": "push-ups",
+                    "duration": 35,
+                    "date": "2014-11-12T00:00:00.000Z"
+                  },
+                  {
+                    "_id": "5b57bb08125f415732db25ee",
+                    "description": "preacher curl",
+                    "duration": 5,
+                    "date": "2014-09-03T00:00:00.000Z"
+                  },
+                  {
+                    "_id": "5b57a1c74ef641316c32c497",
+                    "description": "short rows ",
+                    "duration": 5,
+                    "date": "2013-12-11T00:00:00.000Z"
+                  }
+                ]
+              }
+            </code>
+            <p><i>https://md-exercise-tracker.glitch.me/api/exercise/log?userId=5b56e3c863ac44429745b48d&limit=2</i></p>
+            <code>
+              {
+                "name": "jennifer",
+                "id": "5b56e3c863ac44429745b48d",
+                "count": 2,
+                "exercises": [
+                  {
+                    "date": "2018-07-24T09:55:37.625Z",
+                    "duration": 21,
+                    "description": "dumbell",
+                    "_id": "5b56f7999f8fd3602975f2a3"
+                  },
+                  {
+                    "_id": "5b581800efbc642480eb42f0",
+                    "description": "push-ups",
+                    "duration": 35,
+                    "date": "2014-11-12T00:00:00.000Z"
+                  }
+                ]
+              }
+            </code>
+        </p>
+      </div>
+   </body>
+
+</html>
